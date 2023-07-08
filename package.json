@@ -1,0 +1,28 @@
+{
+  "name": "u-vote-it",
+  "version": "1.0.0",
+  "description": "An example of a voting app",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isaiasqb/u-vote-it.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isaiasqb/u-vote-it/issues"
+  },
+  "homepage": "https://github.com/isaiasqb/u-vote-it#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.5.0"
+  },
+  "devDependencies": {
+    "jest": "^29.6.1"
+  }
+}

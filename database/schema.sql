@@ -1,0 +1,6 @@
+CREATE TABLE supremes (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  royal_lineage BOOLEAN NOT NULL
+);
