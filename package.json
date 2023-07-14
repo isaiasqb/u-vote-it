@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   "homepage": "https://github.com/isaiasqb/u-vote-it#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "mysql2": "^3.5.0"
+    "mysql2": "^3.5.0",
+    "nodemon": "^3.0.1"
   },
   "devDependencies": {
     "jest": "^29.6.1"
