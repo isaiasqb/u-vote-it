@@ -29,7 +29,40 @@ app.get('/', (req, res) => {
   })
 });
 
-// Default reponse for any other requests (Not Found) - ALWAYS last call or it will override others
+// TEST Query for the database
+db.query(`SELECT * FROM supremes`, (err, rows) => {
+  console.log(rows)
+})
+
+// GET a SINGLE supreme
+// db.query(`SELECT * FROM supremes WHERE id = 5`, (err, row) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(row)
+// });
+
+// DELETE a single CANDIDATE
+// db.query(`DELETE FROM supremes WHERE id = ?`, 1, (err, result) => {
+//   if (err){
+//     console.log(err);
+//   }
+//   console.log(result)
+// })
+
+// CREATE another supreme candidate
+const sql = `INSERT INTO supremes (id, first_name, last_name, royal_lineage)
+              VALUES (?,?,?,?)`;
+const params = [1, 'Ronaleria', 'Firbellink', 1];
+db.query(sql, params, (err, result) => {
+  if (err) {
+    console.log(err)
+  }
+  console.log(result)
+})
+
+
+// DEFAULT reponse for any other requests (Not Found) - ALWAYS last call or it will override others
 app.use((req, res) => {
   res.status(404).end();
 })
