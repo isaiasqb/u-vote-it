@@ -32,7 +32,11 @@ app.get('/', (req, res) => {
 
 // GET ALL the supremes from the database
 app.get('/api/supremes', (req, res) => {
-  const sqlCommand =`SELECT * FROM supremes`;
+  const sqlCommand =`SELECT supremes.*, orders.name
+                      AS order_name
+                      FROM supremes
+                      LEFT JOIN orders
+                      ON supremes.order_id = orders.id`;
   db.query(sqlCommand, (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -48,7 +52,12 @@ app.get('/api/supremes', (req, res) => {
 
 // GET a SINGLE supreme
 app.get('/api/supreme/:id', (req, res) => {
-  const sqlCommand = `SELECT * FROM supremes WHERE id = ?`;
+  const sqlCommand =`SELECT supremes.*, orders.name
+                      AS order_name
+                      FROM supremes
+                      LEFT JOIN orders
+                      ON supremes.order_id = orders.id
+                      WHERE id = ?`;
   const params = [req.params.id];
 
   db.query(sqlCommand, params, (err, row) => {
@@ -109,6 +118,10 @@ app.post('/api/supreme', ({body}, res) => {
 });
 
 
+//GET all ORDERS
+app.get('/api/orders', (req, res) => {
+  const sqlCommand = 
+})
 
 
 // DEFAULT reponse for any other requests (Not Found) - ALWAYS last call or it will override others
