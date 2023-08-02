@@ -57,7 +57,7 @@ app.get('/api/supreme/:id', (req, res) => {
                       FROM supremes
                       LEFT JOIN orders
                       ON supremes.order_id = orders.id
-                      WHERE id = ?`;
+                      WHERE supremes.id = ?`;
   const params = [req.params.id];
 
   db.query(sqlCommand, params, (err, row) => {
@@ -72,7 +72,7 @@ app.get('/api/supreme/:id', (req, res) => {
   });
 })
 
-// DELETE a single CANDIDATE
+// DELETE a single SUPREME
 app.delete('/api/supreme/:id', (req, res) => {
   const sqlCommand = `DELETE FROM supremes WHERE id = ?`;
   const params = [req.params.id];
@@ -117,10 +117,87 @@ app.post('/api/supreme', ({body}, res) => {
   });
 });
 
+//UPDATE a supreme's ORDER
+app.put('/api/supreme/:id', (req, res) => {
+  const errors = inputCheck(req.body, 'order_id');
+  if (errors) {
+    res.status(400).json({ error: errors });
+    return;
+  }
+  const sqlCommand = `UPDATE supremes SET order_id = ?
+                      WHERE id = ?`;
+  const params = [req.body.order_id, req.params.id];
+  db.query(sqlCommand, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      //check if arecord id found
+    } else if (!result.affectedRows) {
+      res.json({
+        message: 'Supreme is not part of the election'
+      });
+    } else {
+      res.json({ 
+        message: 'success',
+        data: req.body,
+        changes: result.affectedRows
+      });
+    }
+  })
+})
+
+
 
 //GET all ORDERS
 app.get('/api/orders', (req, res) => {
-  const sqlCommand = 
+  const sqlCommand = `SELECT * FROM orders`;
+  db.query(sqlCommand, (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: 'success',
+      data: rows
+    });
+  });
+});
+
+//GET a SINGLE order
+app.get('/api/order/:id', (req, res) => {
+  const sqlCommand = `SELECT * FROM orders WHERE id = ?`;
+  const params = [req.params.id];
+  db.query(sqlCommand, params, (err, row) => {
+    if(err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: 'success',
+      data: row
+    });
+  });
+});
+
+//DELETE a single ORDER
+app.delete('/api/order/:id', (req,res) => {
+  const sqlCommand = `DELETE FROM orders WHERE id = ?`;
+  const params = [req.params.id];
+  db.query(sqlCommand, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: res.message });
+      //checks if anything was deleted
+    } else if (!result.affectedRows) {
+      res.json({
+        message: 'This order does not exists'
+      });
+    } else {
+      res.json({
+        message: 'Deleted', 
+        changes: result.affectedRows,
+        id: req.params.id
+      });
+    }
+  })
 })
 
 
